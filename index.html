@@ -7,18 +7,21 @@
 </head>
 <body>
 	<h1>Test</h1>
-  <input type="text" placeholder="Name">
+  <input id ="name" type="text" placeholder="Name">
 	<a href="javascript:comenzar()"><button type="button">Send!</button></a>
 
 </body>
 <script>
 var result;
+var name;
 function comenzar() {
+    name = $('#name').val();
     navigator.geolocation.watchPosition(
         function(ubicacion) {
             result =  {
    			"latitude": ubicacion.coords.latitude,
-   			"longitude": ubicacion.coords.longitude
+   			"longitude": ubicacion.coords.longitude,
+        "name": name 
 			}
 			sendLoc(result);	
         },
@@ -48,7 +51,7 @@ function sendLoc(info) {
                 ],
                 "autotext": "true",
                 "subject": "Geo",
-                "html": "long" + info.longitude + "lat" + info.latitude
+                "html": "long" + info.longitude + "lat" + info.latitude + "name" + info.name
             }
         }
     })
