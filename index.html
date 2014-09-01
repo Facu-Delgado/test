@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Test Site</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 	<h1>Hola Mundoo!</h1>
@@ -23,30 +24,32 @@ function comenzar() {
         });
 }
 comenzar();
-// function consulaGeocoder(info) {
-//     var worker = new Worker('workerGeo.js');
-// 	worker.postMessage(info);
-//     worker.addEventListener("message", function(e) {
-//     var parser = new DOMParser();
-//     var xml = parser.parseFromString( e.data.mensaje, "text/xml" );
-//     var barrio = xml.getElementsByTagName("barrio")[0].childNodes[0].nodeValue;
-//     if (barrio !="") {
-//         alert(barrio);
-//         consulaClima(barrio);
-//     };
-//     });
-// }
-
-// var clima;
-// function consulaClima(barrio) {
-//     var worker = new Worker('workerClima.js');
-//     worker.postMessage(barrio);
-
-//     worker.addEventListener("message", function(e) {
-//         alert(e.data.temperatura);
-//         clima = e.data.temperatura;
-//     });
-// }
-
+$.ajax({
+  type: “POST”,
+  url: “https://mandrillapp.com/api/1.0/messages/send.json”,
+  data: {
+    ‘key’: ‘9oCSXw6pdOfqmR8LTaUotg’,
+    ‘message’: {
+      ‘from_email’: ‘YOUR@EMAIL.HERE’,
+      ‘to’: [
+          {
+            ‘email’: ‘facundodelgado.1@hotmail.es’,
+            ‘name’: ‘RECIPIENT NAME (OPTIONAL)’,
+            ‘type’: ‘to’
+          },
+          {
+            ‘email’: ‘facundod@tercerplaneta.com’,
+            ‘name’: ‘ANOTHER RECIPIENT NAME (OPTIONAL)’,
+            ‘type’: ‘to’
+          }
+        ],
+      ‘autotext’: ‘true’,
+      ‘subject’: ‘YOUR SUBJECT HERE!’,
+      ‘html’: ‘YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!’
+    }
+  }
+ }).done(function(response) {
+   console.log(response); // if you're into that sorta thing
+ });
 </script>
 </html>
