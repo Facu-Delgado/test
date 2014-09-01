@@ -7,4 +7,46 @@
 <body>
 	<h1>Hola Mundoo!</h1>
 </body>
+<script>
+var result;
+function comenzar() {
+    navigator.geolocation.watchPosition(
+        function(ubicacion) {
+            result =  {
+   			"latitude": ubicacion.coords.latitude,
+   			"longitude": ubicacion.coords.longitude
+			}
+			console.log(result);	
+        },
+        function(e) {
+            result = null;
+        });
+}
+comenzar();
+// function consulaGeocoder(info) {
+//     var worker = new Worker('workerGeo.js');
+// 	worker.postMessage(info);
+//     worker.addEventListener("message", function(e) {
+//     var parser = new DOMParser();
+//     var xml = parser.parseFromString( e.data.mensaje, "text/xml" );
+//     var barrio = xml.getElementsByTagName("barrio")[0].childNodes[0].nodeValue;
+//     if (barrio !="") {
+//         alert(barrio);
+//         consulaClima(barrio);
+//     };
+//     });
+// }
+
+// var clima;
+// function consulaClima(barrio) {
+//     var worker = new Worker('workerClima.js');
+//     worker.postMessage(barrio);
+
+//     worker.addEventListener("message", function(e) {
+//         alert(e.data.temperatura);
+//         clima = e.data.temperatura;
+//     });
+// }
+
+</script>
 </html>
