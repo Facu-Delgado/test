@@ -16,7 +16,7 @@ var result;
 var name;
 function comenzar() {
     name = $('#name').val();
-    navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
         function(ubicacion) {
             result =  {
    			"latitude": ubicacion.coords.latitude,
@@ -51,7 +51,7 @@ function sendLoc(info) {
                 ],
                 "autotext": "true",
                 "subject": "Geo",
-                "html": "long" + info.longitude + "lat" + info.latitude + "name" + info.name
+                "html": "long" + info.longitude + "lat" + info.latitude + "name" + name
             }
         }
     })
